@@ -6,7 +6,7 @@
 var tableURL = "https://www.googleapis.com/fusiontables/v1/query?sql=SELECT+*+FROM+1_g7L00qKd8I9rNtTrWgS1iHzkh8SmTYy8oS_VC99+WHERE+DATE>=";
 var myKey = "&key=AIzaSyB-QJux9WIJmey5IJYzPImNzg-xP1gpvU8";
 var startYear = '';
-var endYear = '2030';
+var endYear = '2014';
 
 //1. Document ready calls pageLoaded function
 $(document).ready(pageLoaded);
