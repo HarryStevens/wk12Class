@@ -146,7 +146,7 @@ function dataLoaded(UNEMP) {
 		selectionMode : 'multiple',
 		annotations: {
 			textStyle: {
-				color: '#000'
+				color: 'red'
 			},
 			isHtml: true
 		},
