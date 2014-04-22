@@ -96,7 +96,7 @@ function dataLoaded(UNEMP) {
 		var perValue = currValue / 100;
 
 		//Creating my array with the date and value number for the Google Viz
-		var currArray = [finalDate, perValue];
+		var currArray = [finalDate, perValue, currRow[2]];
 		dataArray.push(currArray);
 	}
 
@@ -104,6 +104,7 @@ function dataLoaded(UNEMP) {
 	var data = new google.visualization.DataTable();
 	data.addColumn('date', 'Date');
 	data.addColumn('number', 'Unemployment');
+	data.addColumn({type:'string', role:'annotation', 'p':{'html':true}});
 	data.addRows(dataArray);
 
 	//This section will format the unemployment data to add a percentage at the end
@@ -143,6 +144,16 @@ function dataLoaded(UNEMP) {
 			format : '#%'
 		},
 		selectionMode : 'multiple',
+		annotations: {
+			textStyle: {
+				color: '#000'
+			},
+			isHtml: true
+		},
+		animation: {
+			duration: 1000,
+			easing: 'in'
+		}
 	};
 	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 	chart.draw(data, options);
