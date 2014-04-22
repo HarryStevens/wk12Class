@@ -19,13 +19,32 @@ function pageLoaded() {
 	});
 }
 
-//3. googleLoaded function loads the data and calls the dataLoaded function
+//3. googleLoaded function loads the data and calls the dataLoaded function.
+//	If there are start and end dates in the query string, it will grab them and
+// 	use them for the default start and end dates. Otherwise, it will use 1948 and
+//	2014, respectively.
 function googleLoaded() {
 	$(".btn").on("click", clickHandler);
-	$("#year_1948").click();
+
+	var urlData = History.getState().cleanUrl;
+	var queryString = urlData.split("?")[1];
+
+	if (queryString.length < 1) {
+		var defaultStart = "1948";
+		var defaultEnd = "2014";
+	} else {
+		var startDate = (queryString.split("=")[1]).split("&")[0];
+		var endDate = queryString.split("endyear=")[1];
+		var defaultStart = startDate;
+		var defaultEnd = endDate;
+	}
+
+	$("#year_" + defaultStart).click();
+	$("#eyear_" + defaultEnd).click();
 }
 
-//4. Tells when a given button is clicked and adds the right data
+//4. Tells when a given button is clicked and adds the right data.
+//	Also adds the startYear and endYear to the URL using History.js.
 function clickHandler(e) {
 	var parentID = $(this).parent().attr("id");
 
@@ -39,15 +58,20 @@ function clickHandler(e) {
 		endYear = endID.split("_")[1];
 		$("#buttons-end div").removeClass("active");
 		$("#eyear_" + endYear).addClass("active");
-	} 
-	
-	if (startYear>endYear) {
+	}
+
+	if (startYear > endYear) {
 		$("#chart_div").html("Start date cannot exceed end date.");
 	}
 
 	$.get(tableURL + "'" + startYear + "-01-01'+AND+DATE<='" + endYear + "-01-01'" + myKey, dataLoaded, "json");
 	$("#startdate").html(startYear);
 	$("#enddate").html(endYear);
+
+	//History.js for custom URLs
+	History.pushState({
+		state : 1
+	}, "Civilian Unemployment | " + startYear + " - " + endYear, "?startyear=" + startYear + "&endyear=" + endYear);
 }
 
 //5. dataLoaded function formats the data, runs it throw the Google Visualizaiton library, and displays it
