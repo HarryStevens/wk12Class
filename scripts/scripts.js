@@ -28,8 +28,9 @@ function googleLoaded() {
 
 	var urlData = History.getState().cleanUrl;
 	var queryString = urlData.split("?")[1];
+	console.log(queryString);
 
-	if (queryString.length < 1) {
+	if (! queryString) {
 		var defaultStart = "1948";
 		var defaultEnd = "2014";
 	} else {
